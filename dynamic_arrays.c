@@ -1,0 +1,188 @@
+/* Author: Alex Hiller
+ * Year: 2020
+ *
+ * Program Description: 
+ *    Implementing the "dynamic array" data structure in C.
+ */
+
+
+/* Libraries */
+#include <stdlib.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+
+#define MAX_CHUNK_SIZE  128
+#define TRUE            1
+#define FALSE           0
+#define DATA_TYPE       int
+#define HEAD            1
+#define TAIL            0
+
+struct dynamic_array {
+    DATA_TYPE* data;    // Data array
+    int length;         // Length of allocated space taken up by the array
+    int nb_vals;        // Number of meaningful values stored in the array
+};
+typedef struct dynamic_array dynamic_array_t;
+
+
+typedef uint8_t bool;
+
+
+/* Get and set length */
+int da_get_length(dynamic_array_t* da) {
+    return da->length;
+}
+void da_set_length(dynamic_array_t* da, int new_length) {
+    da->length = new_length;
+}
+
+/* Get and set nb_vals */
+int da_get_nb_vals(dynamic_array_t* da) {
+    return da->nb_vals;
+}
+void da_set_nb_vals(dynamic_array_t* da, int new_nb_vals) {
+    da->nb_vals = new_nb_vals;
+}
+
+
+/* Initialise the da by making the original array's pointer NULL, so it's not 
+ * pointing to nonsense in memory. */
+void da_init(dynamic_array_t* da) {
+    da->data = NULL;
+    da_set_length(da, 0);
+    da_set_nb_vals(da, 0);
+}
+
+/* Expand the available slots in the array */
+bool da_expand(dynamic_array_t* da) {
+    int count = da_get_length(da);
+    if (count == 0) {
+        da->data = (DATA_TYPE*)realloc(da->data, sizeof(DATA_TYPE));
+        if (da->data != NULL) {
+            /* Only change the da's parameter if the allocation worked. */
+            da_set_length(da, 1);
+            return TRUE;
+        }
+        else {
+            return FALSE;
+        }
+    }
+    /* Double the size of the array up until it's 128, then just add 128 */
+    if (count < MAX_CHUNK_SIZE) {
+        da->data = (DATA_TYPE*)realloc(da->data, 2*count*sizeof(DATA_TYPE));
+        /* If the memory allocation failed, let the user know */
+        if (da->data != NULL) {
+            /* Only change the da's parameter if the allocation worked. */
+            da_set_length(da, 2*count);
+            return TRUE;
+        }
+        else {
+            return FALSE;
+        }
+    }
+    else {
+        da->data = (DATA_TYPE*)realloc(da->data, (count + 128)*sizeof(DATA_TYPE));
+        /* If the memory allocation failed, let the user know */
+        if (da->data != NULL) {
+            /* Only change the da's parameter if the allocation worked. */
+            da_set_length(da, count+128);
+            return TRUE;
+        }
+        else {
+            return FALSE;
+        }
+    }
+
+}
+
+/* Delete certain value from array and then resize. */
+bool da_delete(DATA_TYPE val, dynamic_array_t* da) {
+    int val_index=0, i=0;
+    bool found=FALSE;
+    for (i=0; i<da_get_length(da); val_index++, i++) {
+        if (da->data[i] == val) {
+            found=TRUE;
+            break;
+        }
+    }
+    if (found == FALSE) return FALSE;
+    /* Move the elements after val_index to the left by one */
+    for (int j=val_index; j<da->length; j++) {
+        da->data[j] = da->data[j+1];
+    }
+    /* Resize the length attribut of the da struct */
+    da_set_length(da, da->length-1);
+    da_set_nb_vals(da, da->nb_vals-1);
+    /* Officially allocate the memory that way */
+    da->data = (DATA_TYPE*)realloc(da->data, (da->length)*sizeof(*da->data));
+    /* If the memory allocation failed, let the user know */
+    if (da->data != NULL) {
+        return TRUE;
+    }
+    else {
+        return FALSE;
+    }
+}
+
+
+void da_display(dynamic_array_t* da) {
+    int length = da_get_nb_vals(da);
+    for (int i=0; i<length; i++) {
+        printf("%d ", da->data[i]); 
+    }
+    printf("\n"); 
+}
+
+
+void da_append(DATA_TYPE val, dynamic_array_t* da) {
+    if (da_get_length(da) <= da_get_nb_vals(da)) {
+        while (!da_expand(da));
+    }
+    da->data[da_get_nb_vals(da)] = val;
+    da_set_nb_vals(da, da_get_nb_vals(da)+1);
+}
+
+
+int da_pop(bool location, dynamic_array_t* da) { 
+    DATA_TYPE popped=0;
+    if (location == HEAD) {
+        popped = da->data[0];
+        for (int i = 0; i < da->nb_vals; i++) {
+            da->data[i] = da->data[i+1];
+        }
+        da->length = da->length-1;
+        da->nb_vals = da->nb_vals-1;
+        da->data = (DATA_TYPE*)realloc(da->data, (da->length)*sizeof(*da->data));
+
+    }
+    else if (location == TAIL) {
+        popped = da->data[da->nb_vals-1];
+        da->length = da->length-1;
+        da->nb_vals = da->nb_vals-1;
+        da->data = (DATA_TYPE*)realloc(da->data, (da->length)*sizeof(*da->data));
+    }
+    else {
+        return '\0';
+    }
+    return popped;
+}
+
+
+int main (int argc, char *argv[]) {
+    dynamic_array_t my_da;
+    da_init(&my_da); 
+    /* test append */
+    for (int i = 0; i < 100; i++) {
+        da_append(i, &my_da);
+    }
+    da_display(&my_da);
+    /* test delete */
+    da_delete(5, &my_da);
+    da_display(&my_da);
+    while (my_da.nb_vals) { printf("%d\n", da_pop(HEAD, &my_da)); }
+    da_display(&my_da);
+    return 0;
+}
