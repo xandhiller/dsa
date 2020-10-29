@@ -156,9 +156,30 @@ bool sl_swap_nodes(s_node_t* node_a, s_node_t* node_b, s_node_t* head) {
 
 
 /*
+ * Return the pointer to the node that is at the end of the list.
+ */
+s_node_t* sl_goto_end(s_node_t* head) {
+    s_node_t* trav=head;
+    while (!sl_is_end(trav)) {
+        trav = sl_next_node(trav);
+    }
+    return trav;
+}
+
+/*
  * Add a node to the end of the list.
  */
-void sl_append(void) {}
+bool sl_append(s_node_t* add_me, s_node_t* head) {
+    s_node_t* end = sl_goto_end(head);
+    end->next = (s_node_t*)malloc(sizeof(s_node_t));
+    if (end->next == NULL) {
+        return FALSE;
+    }
+    else {
+        sl_init(end->next);
+        return TRUE;
+    }
+}
 
 
 /*
