@@ -11,7 +11,9 @@
 #include <stdint.h>
 
 
-#define DATA_TYPE int
+#define DATA_TYPE   int
+#define TRUE        1
+#define FALSE       0
 
 
 struct s_node {
@@ -28,7 +30,7 @@ typedef uint8_t bool;
  * Initialises the linked list to have the data point to NULL and the next to 
  * point to NULL.
  */
-void slist_init(s_node_t* sl) {
+void sl_init(s_node_t* sl) {
     sl->data = NULL;
     sl->next = NULL;
 }
@@ -37,62 +39,99 @@ void slist_init(s_node_t* sl) {
 /*
  * Returns the struct attribute "next", that points to the next node in the list.
  */
-void slist_get_next(void) {}
+s_node_t* sl_get_next(s_node_t* sl) {
+    return sl->next;
+}
 
 
 /*
  * Set (and possibly validate) the struct attribute "next" to the input value.
  */
-void slist_set_next(void) {}
+bool sl_set_next(s_node_t* new_next, s_node_t* sl) {
+    /* Validate pointer? */
+    sl->next = new_next;
+    return TRUE;
+}
 
 
 /*
  * Returns the "data" pointer for the given node.
  */
-void slist_get_data(void) {}
+DATA_TYPE* sl_get_datap(s_node_t* sl) {
+    return sl->data;
+}
 
 
 /*
  * Set (and possibly validate) the "data" pointer to the given node.
  */
-void slist_set_data(void) {}
+bool sl_set_datap(DATA_TYPE* new_datap, s_node_t* sl) {
+    /* Validate datap? */
+    sl->data = new_datap;
+    return TRUE;
+}
 
 
 /*
  * Determine whether the input node is the last node in the list.
  */
-bool slist_is_end(void) {}
+bool sl_is_end(s_node_t* sl) {
+    if (sl->next == NULL) {
+        return TRUE;
+    }
+    else {
+        return FALSE;
+    }
+}
 
 
 /*
  * Return the next node from the node given as input.
  */
-bool slist_next_node(void) {}
+s_node_t* sl_next_node(s_node_t* sl) {
+    return sl->next;
+}
 
 
 /*
  * Delete the node from the list, and free the memory associated with that node.
+ * Returns bool: TRUE if successfully deleted, FALSE if not found.
  */
-void slist_delete_node(void) {}
+bool sl_delete_node(s_node_t* delete_this, s_node_t* head) {
+    s_node_t* trav=head;
+    if (trav == delete_this) {
+        free(trav);
+        return TRUE;
+    }
+    /* Go until next is "delete this" */
+    while(trav->next != delete_this) {
+        trav = sl_next_node(trav);
+        if (sl_is_end(trav)) {
+            return FALSE;
+        }
+    }
+    free(trav);
+    return TRUE;
+}
 
 
 /*
  * Swap the order of the two input nodes (wrt the list).
  */
-void slist_swap_nodes(void) {}
+void sl_swap_nodes(void) {}
 
 
 /*
  * Add a node to the end of the list.
  */
-void slist_append(void) {}
+void sl_append(void) {}
 
 
 /*
  * Pop a value by location out of the list. This means the data at that node 
  * is returned and that node is removed from the list.
  */
-DATA_TYPE* slist_pop(void) {}
+DATA_TYPE* sl_pop(void) {}
 
 
 int main (int argc, char *argv[]) {
