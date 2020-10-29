@@ -94,24 +94,32 @@ s_node_t* sl_next_node(s_node_t* sl) {
 
 
 /*
- * Delete the node from the list, and free the memory associated with that node.
- * Returns bool: TRUE if successfully deleted, FALSE if not found.
+ * Delete the node from the list, and free the memory associated with that node. 
+ *  If node not found, do nothing and return the head.
+ * Returns head of linked list after deletion of specified node, or if node not 
+ *  found, returns the head of the list with the head unaltered.
  */
-bool sl_delete_node(s_node_t* delete_this, s_node_t* head) {
+s_node_t* sl_delete_node(s_node_t* delete_this, s_node_t* head) {
     s_node_t* trav=head;
+    /* Head is to be deleted */
     if (trav == delete_this) {
+        s_node_t* new_head = trav->next;
         free(trav);
-        return TRUE;
+        return new_head;
     }
     /* Go until next is "delete this" */
     while(trav->next != delete_this) {
         trav = sl_next_node(trav);
         if (sl_is_end(trav)) {
-            return FALSE;
+            /* If the node is not found, the list is returned unaltered. */
+            return head;
         }
     }
-    free(trav);
-    return TRUE;
+    /* "trav" is currently the node before "delete this" */
+    /* Set the next node as the one after the one being deleted */
+    trav->next = delete_this->next;
+    free(delete_this);
+    return head;
 }
 
 
