@@ -10,20 +10,20 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdio.h>
-#include <string.h>
-#include <math.h>
+
 
 #define MAX_CHUNK_SIZE  128
 #define TRUE            1
 #define FALSE           0
 #define DATA_TYPE       int
-#define HEAD            1
-#define TAIL            0
+#define HEAD            -1
+#define TAIL            -2
+
 
 struct dynamic_array {
-    DATA_TYPE* data;    // Data array
-    int length;         // Length of allocated space taken up by the array
-    int nb_vals;        // Number of meaningful values stored in the array
+    DATA_TYPE* data;    /* Data array */
+    int length;         /* Length of allocated space taken up by the array */
+    int nb_vals;        /* Number of meaningful values stored in the array */
 };
 typedef struct dynamic_array dynamic_array_t;
 
@@ -55,6 +55,7 @@ void da_init(dynamic_array_t* da) {
     da_set_length(da, 0);
     da_set_nb_vals(da, 0);
 }
+
 
 /* Expand the available slots in the array */
 bool da_expand(dynamic_array_t* da) {
@@ -95,11 +96,11 @@ bool da_expand(dynamic_array_t* da) {
             return FALSE;
         }
     }
-
 }
 
+
 /* Delete certain value from array and then resize. */
-bool da_delete(DATA_TYPE val, dynamic_array_t* da) {
+bool da_delete_val(DATA_TYPE val, dynamic_array_t* da) {
     int val_index=0, i=0;
     bool found=FALSE;
     for (i=0; i<da_get_length(da); val_index++, i++) {
@@ -117,13 +118,41 @@ bool da_delete(DATA_TYPE val, dynamic_array_t* da) {
     da_set_length(da, da->length-1);
     da_set_nb_vals(da, da->nb_vals-1);
     /* Officially allocate the memory that way */
-    da->data = (DATA_TYPE*)realloc(da->data, (da->length)*sizeof(*da->data));
+    da->data = (DATA_TYPE*)realloc(da->data, (da->length)*sizeof(DATA_TYPE));
     /* If the memory allocation failed, let the user know */
     if (da->data != NULL) {
         return TRUE;
     }
     else {
         return FALSE;
+    }
+}
+
+
+/* Returns bool: TRUE if deletion successful, FALSE if deletion failed  */
+bool da_delete_index(uint64_t index, dynamic_array_t* da) {
+    /* Cannot delete value if the index is greater than the number of values */
+    if (index >= da->nb_vals) {
+        return FALSE;
+    }
+    else {
+        /* Left shift the values after the index*/
+        for (int i = index; i < da->nb_vals; i++) {
+            da->data[i] = da->data[i+1];
+        }
+        /* Decrement the count of nb_vals after the shift*/ 
+        da_set_nb_vals(da, da_get_nb_vals(da)-1);
+        /* Decrement the count of length after the shift*/ 
+        da_set_length(da, da_get_length(da)-1);
+        /* Realloc the array to the size of length*/
+        da->data = (DATA_TYPE*)realloc(da->data, da_get_length(da)*sizeof(DATA_TYPE));
+        /* If the memory allocation failed, the deletion failed.*/
+        if (da->data != NULL) {
+            return TRUE;
+        }
+        else {
+            return FALSE;
+        }
     }
 }
 
@@ -146,7 +175,8 @@ void da_append(DATA_TYPE val, dynamic_array_t* da) {
 }
 
 
-int da_pop(bool location, dynamic_array_t* da) { 
+/* Pop values from the front (HEAD), end of the list (TAIL), or index of a value */
+int da_pop(int location, dynamic_array_t* da) { 
     DATA_TYPE popped=0;
     if (location == HEAD) {
         popped = da->data[0];
@@ -164,6 +194,10 @@ int da_pop(bool location, dynamic_array_t* da) {
         da->nb_vals = da->nb_vals-1;
         da->data = (DATA_TYPE*)realloc(da->data, (da->length)*sizeof(*da->data));
     }
+    else if (location >=0 && location < da->nb_vals) {
+        popped = da->data[location];
+
+    }
     else {
         return '\0';
     }
@@ -175,14 +209,14 @@ int main (int argc, char *argv[]) {
     dynamic_array_t my_da;
     da_init(&my_da); 
     /* test append */
-    for (int i = 0; i < 100; i++) {
-        da_append(i, &my_da);
+    for (int i=0; i<100; i++) {
+        da_append(99-i, &my_da);
     }
     da_display(&my_da);
     /* test delete */
-    da_delete(5, &my_da);
+    da_delete_val(5, &my_da);
     da_display(&my_da);
-    while (my_da.nb_vals) { printf("%d\n", da_pop(HEAD, &my_da)); }
+    da_delete_index(0, &my_da);
     da_display(&my_da);
     return 0;
 }
