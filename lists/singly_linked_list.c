@@ -183,9 +183,27 @@ bool sl_append(s_node_t* add_me, s_node_t* head) {
 
 
 /*
- * Insert a node after a given node.
+ * Insert a node after a given node, which.
  */
-void sl_insert(s_node_t* to_insert, s_node_t* after_me) {}
+void sl_insert_after(s_node_t* to_insert, s_node_t* after_me) {
+    if (to_insert != NULL) {
+        /*Set new nodes next pointer to the next of after me*/
+        to_insert->next = after_me->next;
+        /*Set after me*/
+        after_me->next = to_insert;
+        return TRUE;
+    }
+    else {
+        return FALSE;
+    }
+}
+
+
+void sl_insert_at(s_node_t* to_insert, uint64_t index, s_node_t* head) {}
+
+
+void sl_find_value(void) {}
+void sl_find_index(void) {}
 
 
 /*
