@@ -124,15 +124,47 @@ s_node_t* sl_delete_node(s_node_t* delete_this, s_node_t* head) {
 
 
 /*
- * Swap the order of the two input nodes (wrt the list).
+ * Swap the order of the two (non-NULL) input nodes (wrt the list).
+ * Returns: TRUE if the swap worked, FALSE if it did not work.
  */
-void sl_swap_nodes(void) {}
+bool sl_swap_nodes(s_node_t* node_a, s_node_t* node_b, s_node_t* head) {
+    if (node_a == NULL || node_b == NULL) {
+        return FALSE;
+    }
+    s_node_t* trav_a = head;
+    s_node_t* trav_b = head;
+    /* Go until you're just before node_a, save to trav_a */
+    while (trav_a->next != node_a) {
+        trav_a = sl_next_node(trav_a);
+        if (sl_is_end(trav_a)) {
+            return FALSE;
+        }
+    }
+    /* Keep going until you're just before node_b, save to trav_b */
+    while (trav_b->next != node_b) {
+        trav_b = sl_next_node(trav_b);
+        if (sl_is_end(trav_b)) {
+            return FALSE;
+        }
+    }
+    /* Make the node before node_a (trav_a) point to node_b */
+    trav_a->next = node_b;
+    /* Make the node before node_b (trav_b) point to node_a */
+    trav_b->next = node_a;
+    return TRUE;
+}
 
 
 /*
  * Add a node to the end of the list.
  */
 void sl_append(void) {}
+
+
+/*
+ * Insert a node after a given node.
+ */
+void sl_insert(s_node_t* to_insert, s_node_t* after_me) {}
 
 
 /*
