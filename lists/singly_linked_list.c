@@ -229,8 +229,18 @@ bool sl_insert_at(s_node_t* to_insert, uint64_t index, s_node_t* head) {
 }
 
 
-void sl_find_value(void) {}
-void sl_find_index(void) {}
+/*
+ * Given a specific DATA_TYPE value, and the head of the list, return the 
+ * address of the first node that has that value.
+ */
+s_node_t* sl_find_value(void) {}
+
+
+/*
+ * Given an integer index of the list, return the pointer of the node at that
+ * index.
+ */
+s_node_t* sl_find_index(void) {}
 
 
 /*
