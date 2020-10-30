@@ -233,14 +233,33 @@ bool sl_insert_at(s_node_t* to_insert, uint64_t index, s_node_t* head) {
  * Given a specific DATA_TYPE value, and the head of the list, return the 
  * address of the first node that has that value.
  */
-s_node_t* sl_find_value(void) {}
+s_node_t* sl_find_value(DATA_TYPE to_find, s_node_t* head) {
+    s_node_t* trav = head;
+    while(!sl_is_end(trav)) {
+        if(*(trav->data) == to_find) {
+            return trav;
+        }
+        else {
+            trav = trav->next;
+        }
+    }
+    return NULL;
+}
 
 
 /*
  * Given an integer index of the list, return the pointer of the node at that
  * index.
  */
-s_node_t* sl_find_index(void) {}
+s_node_t* sl_find_index(uint64_t index, s_node_t* head) {
+    s_node_t* trav = head;
+    int i=0;
+    while (trav != NULL && i<index) {
+        trav = trav->next;
+        i++;
+    }
+    return trav;
+}
 
 
 /*
