@@ -14,6 +14,7 @@
 #define DATA_TYPE   int
 #define TRUE        1
 #define FALSE       0
+#define FAIL        -1
 
 
 struct s_node {
@@ -187,9 +188,9 @@ bool sl_append(s_node_t* add_me, s_node_t* head) {
  */
 void sl_insert_after(s_node_t* to_insert, s_node_t* after_me) {
     if (to_insert != NULL) {
-        /*Set new nodes next pointer to the next of after me*/
+        /*Set new nodes next pointer to the next of after_me*/
         to_insert->next = after_me->next;
-        /*Set after me*/
+        /*Set after_me*/
         after_me->next = to_insert;
         return TRUE;
     }
@@ -199,7 +200,33 @@ void sl_insert_after(s_node_t* to_insert, s_node_t* after_me) {
 }
 
 
-void sl_insert_at(s_node_t* to_insert, uint64_t index, s_node_t* head) {}
+bool sl_insert_at(s_node_t* to_insert, uint64_t index, s_node_t* head) {
+    /* If the node to insert or the head point to ∅, they are not nodes. */
+    if (to_insert == NULL || head == NULL) {
+        return FALSE;
+    }
+    s_node_t* trav = head;
+    /* Find the node before where you want to insert */
+    int i=0;
+    bool found=FALSE;
+    while (!sl_is_end(trav) && i<index-1) {
+        trav = trav->next;
+        i++;
+        /* If we're not at the end and we're one index away from the desired
+         * insertion point, then we've found it. */
+        if (!sl_is_end(trav) && i==index-1) {
+            found = TRUE;
+        }
+    }
+    if (!found) {
+        return FALSE;
+    }
+    else {
+        to_insert->next = trav->next;
+        trav->next = to_insert;
+        return TRUE;
+    }
+}
 
 
 void sl_find_value(void) {}
