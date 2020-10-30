@@ -263,14 +263,47 @@ s_node_t* sl_find_index(uint64_t index, s_node_t* head) {
 
 
 /*
- * Pop a value by location out of the list. This means the data at that node 
- * is returned and that node is removed from the list.
+ * Find the number of elements in the singly-linked-list.
  */
-DATA_TYPE* sl_pop(void) {}
+uint64_t sl_len(s_node_t* head) {
+    int len=0;
+    s_node_t* trav = head;
+    while (!sl_is_end(trav)) {
+        len++;
+        trav = trav->next; 
+    }
+    return len;
+}
+
+
+/*
+ * Pop a node by location out of the list. This means the data at that node 
+ * is returned and that node is removed from the sequence of the list.
+ */
+s_node_t* sl_pop(uint64_t location, s_node_t* head) {
+    /* If the location index is bigger than the list, cannot pop it. Also, if
+     * the list is non-existent, can't pop. */
+    if (location >= sl_len(head) || head == NULL) {
+        return NULL;
+    }
+    int i=0;
+    /* find location */
+    s_node_t* pop = sl_find_index(location, head);
+    s_node_t* before_pop = sl_find_index(location-1, head);
+    /* Remove the node from the list but don't deallocate the memory, as you 
+     * need the nodes contents to return to the user. */
+    if (pop != NULL || before_pop != NULL) {
+        return NULL;
+    }
+    else {
+        /* Remove the node from the sequence of the list */
+        before_pop->next = pop->next;
+        return pop;
+    }
+}
 
 
 int main (int argc, char *argv[]) {
-    /* <++> */
 
     return 0;
 }
