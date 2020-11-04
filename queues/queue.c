@@ -2,7 +2,7 @@
  * Year: 2020
  *
  * Program Description: 
- *    <++>
+ *    Implementing a simple queue (LIFO) built on dynamic arrays.
  */
 
 

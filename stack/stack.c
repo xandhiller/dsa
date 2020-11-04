@@ -2,7 +2,7 @@
  * Year: 2020
  *
  * Program Description: 
- *    <++>
+ *    Implementing a simple stack (FIFO) built on dynamic arrays.
  */
 
 #include "stack.h"

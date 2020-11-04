@@ -153,7 +153,7 @@ void da_append(DATA_TYPE val, dynamic_array_t* da) {
 
 
 /* Pop values from the front (HEAD), end of the list (TAIL), or index of a value */
-int da_pop(int location, dynamic_array_t* da) { 
+DATA_TYPE da_pop(int location, dynamic_array_t* da) { 
     DATA_TYPE popped=0;
     if (location == HEAD) {
         popped = da->data[0];
