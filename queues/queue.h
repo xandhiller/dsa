@@ -9,6 +9,7 @@
 #include <string.h>
 #include <math.h>
 
+
 #include "../arrays/dynamic_arrays.h"
 
 /* Structures */
