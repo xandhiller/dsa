@@ -6,30 +6,7 @@
  */
 
 
-/* Libraries */
-#include <stdlib.h>
-#include <stdint.h>
-#include <stdio.h>
-
-
-#define MAX_CHUNK_SIZE  128
-#define TRUE            1
-#define FALSE           0
-#define DATA_TYPE       int
-#define HEAD            -1
-#define TAIL            -2
-
-
-struct dynamic_array {
-    DATA_TYPE* data;    /* Data array */
-    int length;         /* Length of allocated space taken up by the array */
-    int nb_vals;        /* Number of meaningful values stored in the array */
-};
-typedef struct dynamic_array dynamic_array_t;
-
-
-typedef uint8_t bool;
-
+#include "dynamic_arrays.h"
 
 /* Get and set length */
 int da_get_length(dynamic_array_t* da) {
@@ -205,18 +182,18 @@ int da_pop(int location, dynamic_array_t* da) {
 }
 
 
-int main (int argc, char *argv[]) {
-    dynamic_array_t my_da;
-    da_init(&my_da); 
-    /* test append */
-    for (int i=0; i<100; i++) {
-        da_append(99-i, &my_da);
-    }
-    da_display(&my_da);
-    /* test delete */
-    da_delete_val(5, &my_da);
-    da_display(&my_da);
-    da_delete_index(0, &my_da);
-    da_display(&my_da);
-    return 0;
-}
+// int main (int argc, char *argv[]) {
+//     dynamic_array_t my_da;
+//     da_init(&my_da); 
+//     /* test append */
+//     for (int i=0; i<100; i++) {
+//         da_append(99-i, &my_da);
+//     }
+//     da_display(&my_da);
+//     /* test delete */
+//     da_delete_val(5, &my_da);
+//     da_display(&my_da);
+//     da_delete_index(0, &my_da);
+//     da_display(&my_da);
+//     return 0;
+// }
