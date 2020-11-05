@@ -53,3 +53,6 @@ void da_append(DATA_TYPE val, dynamic_array_t* da);
 
 /* Pop values from the front (HEAD), end of the list (TAIL), or index of a value */
 DATA_TYPE da_pop(int location, dynamic_array_t* da);
+
+/* Swap the values of loc_a and loc_b within the array, da */
+void da_swap(uint64_t loc_a, uint64_t loc_b, dynamic_array_t* da);

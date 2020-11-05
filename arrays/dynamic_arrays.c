@@ -48,8 +48,11 @@ bool da_expand(dynamic_array_t* da) {
             return FALSE;
         }
     }
-    /* Double the size of the array up until it's 128, then just add 128 */
-    if (count < MAX_CHUNK_SIZE) {
+    /* Double the size of the array up until it's 128, then just add 128. Unless
+     * the dynamic array is being used for a heap data structure, in which case 
+     * just always double. */
+//    if (count < MAX_CHUNK_SIZE) {
+    else {
         da->data = (DATA_TYPE*)realloc(da->data, 2*count*sizeof(DATA_TYPE));
         /* If the memory allocation failed, let the user know */
         if (da->data != NULL) {
@@ -61,18 +64,19 @@ bool da_expand(dynamic_array_t* da) {
             return FALSE;
         }
     }
-    else {
-        da->data = (DATA_TYPE*)realloc(da->data, (count + 128)*sizeof(DATA_TYPE));
-        /* If the memory allocation failed, let the user know */
-        if (da->data != NULL) {
-            /* Only change the da's parameter if the allocation worked. */
-            da_set_length(da, count+128);
-            return TRUE;
-        }
-        else {
-            return FALSE;
-        }
-    }
+//    }
+//   else {
+//       da->data = (DATA_TYPE*)realloc(da->data, (count + 128)*sizeof(DATA_TYPE));
+//       /* If the memory allocation failed, let the user know */
+//       if (da->data != NULL) {
+//           /* Only change the da's parameter if the allocation worked. */
+//           da_set_length(da, count+128);
+//           return TRUE;
+//       }
+//       else {
+//           return FALSE;
+//       }
+//   }
 }
 
 
@@ -182,6 +186,12 @@ DATA_TYPE da_pop(int location, dynamic_array_t* da) {
 }
 
 
+void da_swap(uint64_t loc_a, uint64_t loc_b, dynamic_array_t* da) {
+    DATA_TYPE temp = da->data[loc_a];
+    da->data[loc_a] = da->data[loc_b];
+    da->data[loc_b] = temp;
+}
+
 // int main (int argc, char *argv[]) {
 //     dynamic_array_t my_da;
 //     da_init(&my_da); 
@@ -197,3 +207,6 @@ DATA_TYPE da_pop(int location, dynamic_array_t* da) {
 //     da_display(&my_da);
 //     return 0;
 // }
+//
+//
+//
