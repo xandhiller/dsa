@@ -59,7 +59,8 @@ DATA_TYPE hp_peek(uint64_t location, heap_t* hp);
 
 
 /* Each node has two children, so must indices must be returned as a pointer to 
- * an array of the index values.  */
+ * an array of the index values. First index is how many children. The other 
+ * elements of the array are the indices of the children in the heap array. */
 uint64_t* hp_get_children(uint64_t index, heap_t* hp);
 
 
@@ -79,7 +80,13 @@ void hp_bubble_down(uint64_t location, heap_t* hp);
 /* Add an element to the heap. */
 void hp_add(DATA_TYPE val, heap_t* hp);
 
-void hp_pop_by_val(void);
+
+/******************************************************************************/
+/* NOTE: The pop functionality can fail if the val does not exist in the heap. 
+ * Because of this, we need to return a pointer and if it is NULL, then it 
+ * wasn't found in the heap. */
+/******************************************************************************/
+DATA_TYPE* hp_pop_by_val(DATA_TYPE val, heap_t* hp);
 
 
 void hp_pop_by_index(void);
