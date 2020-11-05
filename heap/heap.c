@@ -19,10 +19,10 @@ bool hp_expand(heap_t* hp) {
 
 
 int8_t hp_order_rel(DATA_TYPE a, DATA_TYPE b) {
-    if (a > b) {
+    if (a < b) {
         return A_PRECEDES;
     }
-    else if (b > a) {
+    else if (b < a) {
         return B_PRECEDES;
     }
     else {
