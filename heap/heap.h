@@ -3,9 +3,16 @@
 
 
 /* Defines & Enumerations */
-#define A_PRECEDES   1 
-#define B_PRECEDES  -1
-#define A_EQUAL_B   0
+#define A_PRECEDES        1 
+#define LEFT_PRECEDES     1
+#define B_PRECEDES       -1
+#define RIGHT_PRECEDES   -1
+#define A_EQUAL_B         0
+
+#define CHOOSE_SMALLEST   1
+#define SWAP_RIGHT        2
+#define SWAP_LEFT         3
+#define DO_NOTHING        4
 
 /* Libraries */
 #include <stdlib.h>
@@ -66,7 +73,7 @@ void hp_bubble_up(uint64_t location, heap_t* hp);
 
 /* A little more involved than bubble up, as it requires two nodes to choose 
  * from. */
-void hp_bubble_down(void);
+void hp_bubble_down(uint64_t location, heap_t* hp);
 
 
 /* Add an element to the heap. */
