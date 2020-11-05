@@ -43,24 +43,34 @@ uint64_t hp_next_empty(heap_t* hp);
 DATA_TYPE hp_peek(uint64_t location, heap_t* hp);
 
 
+/******************************************************************************/
+/* NOTE: The get_children and get_parents method return indexes, as that 
+ * gives the user more information -- both the position in the array, and using
+ * the index they can find the value from the heap, which they have access to
+ * already. */
+/******************************************************************************/
+
+
 /* Each node has two children, so must indices must be returned as a pointer to 
  * an array of the index values.  */
-uint64_t* hp_get_children(void);
+uint64_t* hp_get_children(uint64_t index, heap_t* hp);
 
 
-/* Returns the index of the parent for the given node.  */
-uint64_t hp_get_parent(uint64_t index, heap_t hp);
+/* Returns the index of the parent for the given node. */
+uint64_t hp_get_parent(uint64_t index);
+
+
+/* Should just keep going until the order relation is satisfied. */
+bool hp_bubble_up(void);
+
+
+/* A little more involved than bubble up, as it requires two nodes to choose 
+ * from. */
+void hp_bubble_down(void);
 
 
 /* Add an element to the heap. */
-void hp_add(void);
-
-
-void hp_bubble_up(void);
-
-
-void hp_bubble_down(void);
-
+void hp_add(DATA_TYPE val, heap_t* hp);
 
 void hp_pop_by_val(void);
 

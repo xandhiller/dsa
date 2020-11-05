@@ -41,6 +41,32 @@ DATA_TYPE hp_peek(uint64_t location, heap_t* hp) {
 }
 
 
+uint64_t* hp_get_children(uint64_t index, heap_t* hp) {
+    /* If node has two children */
+    if (hp->array->nb_vals >= 2*index+1) {
+        uint64_t* indices = (uint64_t*)malloc(2*sizeof(uint64_t));
+        indices[0] = 2*index+1;
+        indices[1] = 2*index+2;
+        return indices;
+    } 
+    /* The node only has one child */
+    else if (hp->array->nb_vals == 2*index) {
+        uint64_t* indices = (uint64_t*)malloc(sizeof(uint64_t));
+        indices[0] = 2*index+1;
+        return indices;
+    }
+    /* Node does not have children */
+    else {
+        return NULL;
+    }
+}
+
+
+uint64_t hp_get_parent(uint64_t index) {
+    /* Integer division is important here. */
+    return (index-1)/2;
+}
+
 
 int main (int argc, char *argv[]) {
     /* <++> */
