@@ -1,4 +1,3 @@
-
 // Author:  Alex Hiller
 // Year:    2020
 
@@ -18,8 +17,8 @@
 
 struct dynamic_array {
     DATA_TYPE* data;    /* Data array */
-    int length;         /* Length of allocated space taken up by the array */
-    int nb_vals;        /* Number of meaningful values stored in the array */
+    uint64_t length;    /* Length of allocated space taken up by the array */
+    uint64_t nb_vals;   /* Number of meaningful values stored in the array */
 };
 typedef struct dynamic_array dynamic_array_t;
 
@@ -56,3 +55,8 @@ DATA_TYPE da_pop(int location, dynamic_array_t* da);
 
 /* Swap the values of loc_a and loc_b within the array, da */
 void da_swap(uint64_t loc_a, uint64_t loc_b, dynamic_array_t* da);
+
+
+/* Find the indices of a certain value in the array. Returns an array of 
+ * indices */
+uint64_t* da_find_by_val(DATA_TYPE val, dynamic_array_t* da);

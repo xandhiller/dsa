@@ -192,6 +192,22 @@ void da_swap(uint64_t loc_a, uint64_t loc_b, dynamic_array_t* da) {
     da->data[loc_b] = temp;
 }
 
+
+uint64_t* da_find_by_val(DATA_TYPE val, dynamic_array_t* da) {
+    uint64_t len = da->nb_vals;
+    uint64_t count = 0;
+    uint64_t* indices = NULL;
+    for (int i = 0; i < len; i++) {
+        if (da->data[i] == val) {
+            count++;
+            indices = (uint64_t*)realloc(da->data, sizeof(count));
+            indices[count-1] = i;
+        }
+    }
+    return indices;
+}
+
+
 // int main (int argc, char *argv[]) {
 //     dynamic_array_t my_da;
 //     da_init(&my_da); 
