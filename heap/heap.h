@@ -3,8 +3,8 @@
 
 
 /* Defines & Enumerations */
-#define A_GREATER   1 
-#define B_GREATER  -1
+#define A_PRECEDES   1 
+#define B_PRECEDES  -1
 #define A_EQUAL_B   0
 
 /* Libraries */
@@ -61,7 +61,7 @@ uint64_t hp_get_parent(uint64_t index);
 
 
 /* Should just keep going until the order relation is satisfied. */
-bool hp_bubble_up(void);
+void hp_bubble_up(uint64_t location, heap_t* hp);
 
 
 /* A little more involved than bubble up, as it requires two nodes to choose 

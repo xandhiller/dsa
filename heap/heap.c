@@ -20,10 +20,10 @@ bool hp_expand(heap_t* hp) {
 
 int8_t hp_order_rel(DATA_TYPE a, DATA_TYPE b) {
     if (a > b) {
-        return A_GREATER;
+        return A_PRECEDES;
     }
     else if (b > a) {
-        return B_GREATER;
+        return B_PRECEDES;
     }
     else {
         return A_EQUAL_B;
@@ -63,9 +63,38 @@ uint64_t* hp_get_children(uint64_t index, heap_t* hp) {
 
 
 uint64_t hp_get_parent(uint64_t index) {
-    /* Integer division is important here. */
-    return (index-1)/2;
+    /* If the index the root, it is its own parent. */
+    if (index == 0) {
+        return 0;
+    }
+    /* Otherwise, the node has a parent. */
+    else {
+        /* Integer division is important here. */
+        return (index-1)/2; 
+    }
 }
+
+
+
+void hp_bubble_up(uint64_t location, heap_t* hp) {
+    uint64_t parent_index = hp_get_parent(location);
+    switch(hp_order_rel(hp->array->data[location], hp->array->data[parent_index])) { 
+        case(A_PRECEDES):
+            da_swap(location, parent_index, hp->array);
+            location = parent_index;
+            hp_bubble_up(location, hp);
+            break;
+        case(B_PRECEDES):
+            return;
+            break;
+        case(A_EQUAL_B):
+            return;
+            break;
+    }
+}
+
+
+
 
 
 int main (int argc, char *argv[]) {
