@@ -97,6 +97,7 @@ void hp_bubble_up(uint64_t location, heap_t* hp) {
     }
 }
 
+
 uint8_t hp_bubble_down_action(DATA_TYPE left_child, DATA_TYPE right_child, DATA_TYPE current) {
     uint8_t l_to_c = hp_order_rel(left_child,  current);
     uint8_t r_to_c = hp_order_rel(right_child, current);
@@ -198,15 +199,35 @@ void hp_add(DATA_TYPE val, heap_t* hp) {
 DATA_TYPE* hp_pop_by_val(DATA_TYPE val, heap_t* hp) {
     /* Find val's index with end */
     uint64_t* indices = da_find_by_val(val, hp->array);
-    if (indices == NULL) {
+    uint64_t nb_copies = indices[0];
+    if (nb_copies == 0) {
         free(indices);
         return NULL;
     }
-    /* Swap val with the last value */
-    da_swap(
-    /* Pop end  */
-    /* Bubble down the new root */
-    /* Return the popped value */
+    uint64_t chosen = indices[1];
+    uint64_t last_index = hp->array->nb_vals-1;
+    if (chosen != last_index) {
+        /* Swap val with the last value */
+        da_swap(chosen, hp->array->nb_vals-1, hp->array);
+        /* Pop end  */
+        DATA_TYPE* popped = (DATA_TYPE*)malloc(sizeof(DATA_TYPE));
+        *popped = da_pop(TAIL, hp->array);
+        /* Bubble down the swapped value */
+        hp_bubble_down(chosen, hp);
+        /* Return the popped value */
+        return popped;
+    }
+    else if (chosen == last_index) {
+        /* Pop end  */
+        DATA_TYPE* popped = (DATA_TYPE*)malloc(sizeof(DATA_TYPE));
+        *popped = da_pop(TAIL, hp->array);
+        /* Return the popped value */
+        return popped;
+    }
+    /* Null return for safety. */
+    else {
+        return NULL;
+    }
 }
 
 
