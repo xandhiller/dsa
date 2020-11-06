@@ -257,16 +257,46 @@ DATA_TYPE* hp_pop_by_index(uint64_t index, heap_t* hp) {
 
 
 void hp_display(heap_t* hp) {
-    da_display(hp->array);
+    printf("\n"); 
+    uint64_t len = hp->array->nb_vals;
+    uint64_t n_lim = 0;
+    while ((1 << n_lim) < len) {
+        n_lim++;
+    }
+    uint64_t nb_slots = (1 << n_lim);
+    uint64_t last_index = hp->array->nb_vals-1;
+    uint64_t n = 0;
+    for (int i=0; i<nb_slots; i++) {
+        if (i+1 >= (1 << n)) {
+            /* Print ending width */
+            /* Print new line */
+            printf("\n"); 
+            /* Print starting width */
+            /* Readjust the width */
+            n++;
+        }
+        else if (i != 0) {
+            printf(" "); 
+        }
+        if (i > last_index) {
+            printf("(∅, _%d_)", i); 
+        }
+        else if (i <= last_index) {
+            printf("(%d, _%d_)", hp->array->data[i], i); 
+        }
+
+    }
 }
 
 
 int main (int argc, char *argv[]) {
     heap_t my_hp;
     hp_init(&my_hp);
-    for (int i = 100; i > 0; i--) {
+    for (int i = 120; i > 0; i--) {
         hp_add(i, &my_hp);
     }
+    hp_display(&my_hp);
+    hp_pop_by_index(11, &my_hp);
     hp_display(&my_hp);
     return 0;
 }
