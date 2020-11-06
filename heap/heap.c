@@ -9,12 +9,14 @@
 
 /* Initialise the heap by calling init on the dynamic array. */
 void hp_init(heap_t* hp) {
+    /* Allocate memory for the actual array itself. */
+    hp->array  = (dynamic_array_t*)malloc(sizeof(dynamic_array_t));
     da_init(hp->array);
 }
 
 
 bool hp_expand(heap_t* hp) {
-    return da_expand(hp);
+    return da_expand(hp->array);
 }
 
 
@@ -136,6 +138,8 @@ uint8_t hp_bubble_down_action(DATA_TYPE left_child, DATA_TYPE right_child, DATA_
     else if (l_to_c == B_PRECEDES && r_to_c == B_PRECEDES) {
         return DO_NOTHING;
     }
+    /* Failsafe */
+    return DO_NOTHING;
 }
 
 
@@ -252,8 +256,17 @@ DATA_TYPE* hp_pop_by_index(uint64_t index, heap_t* hp) {
 }
 
 
-int main (int argc, char *argv[]) {
-    /* ; */
+void hp_display(heap_t* hp) {
+    da_display(hp->array);
+}
 
+
+int main (int argc, char *argv[]) {
+    heap_t my_hp;
+    hp_init(&my_hp);
+    for (int i = 100; i > 0; i--) {
+        hp_add(i, &my_hp);
+    }
+    hp_display(&my_hp);
     return 0;
 }
