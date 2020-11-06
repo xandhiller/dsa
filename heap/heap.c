@@ -268,11 +268,8 @@ void hp_display(heap_t* hp) {
     uint64_t n = 0;
     for (int i=0; i<nb_slots; i++) {
         if (i+1 >= (1 << n)) {
-            /* Print ending width */
             /* Print new line */
             printf("\n"); 
-            /* Print starting width */
-            /* Readjust the width */
             n++;
         }
         else if (i != 0) {
@@ -284,7 +281,6 @@ void hp_display(heap_t* hp) {
         else if (i <= last_index) {
             printf("(%d, _%d_)", hp->array->data[i], i); 
         }
-
     }
 }
 
