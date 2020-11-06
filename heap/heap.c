@@ -231,6 +231,27 @@ DATA_TYPE* hp_pop_by_val(DATA_TYPE val, heap_t* hp) {
 }
 
 
+DATA_TYPE* hp_pop_by_index(uint64_t index, heap_t* hp) {
+    uint64_t last_index = hp->array->nb_vals-1;
+    /* If index is out of the bounds of the number of values, return NULL. */
+    if (index > last_index) {
+        return NULL;
+    }
+    /* If the index is within the values (note that the index is unsigned). */
+    else if (index <= last_index) {
+        /* Swap the given index with the tail (if it is not the tail) */
+        if (index != last_index) {
+            da_swap(index, last_index, hp->array);
+        }
+        DATA_TYPE* popped = (DATA_TYPE*)malloc(sizeof(DATA_TYPE));
+        *popped = da_pop(TAIL, hp->array);
+        return popped;
+    }
+    /* Failsafe. */
+    return NULL;
+}
+
+
 int main (int argc, char *argv[]) {
     /* ; */
 

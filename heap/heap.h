@@ -89,8 +89,7 @@ void hp_add(DATA_TYPE val, heap_t* hp);
 DATA_TYPE* hp_pop_by_val(DATA_TYPE val, heap_t* hp);
 
 
-void hp_pop_by_index(void);
+DATA_TYPE* hp_pop_by_index(uint64_t index, heap_t* hp);
 
 
 void hp_display(heap_t* hp);
-
