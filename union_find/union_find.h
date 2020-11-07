@@ -16,6 +16,7 @@
 /* Structures */
 struct union_find {
     dynamic_array_t* array;
+    uint64_t nb_vertices;
 };
 typedef struct union_find union_find_t;
 
@@ -33,5 +34,6 @@ typedef struct union_find union_find_t;
 void uf_init(union_find_t* uf, uint64_t nb_elems);
 uint64_t uf_get_parent(uint64_t a, union_find_t* uf);
 bool uf_is_root(uint64_t a, union_find_t* uf);
+uint64_t ug_get_root(uint64_t a, union_find_t* uf);
 bool uf_find(uint64_t a, uint64_t b, union_find_t* uf);
 void uf_union(uint64_t a, uint64_t b, union_find_t* uf);
