@@ -11,7 +11,6 @@
 #include <stdio.h>
 
 
-/* #define MAX_CHUNK_SIZE  128 */
 #define TRUE            1
 #define FALSE           0
 #define DATA_TYPE       int
