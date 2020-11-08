@@ -180,23 +180,21 @@ uint64_t* da_find_by_val(DATA_TYPE val, dynamic_array_t* da) {
     return indices;
 }
 
-
-int main (int argc, char *argv[]) {
-    /* Tests */
-    dynamic_array_t my_da;
-    da_init(&my_da); 
-    /* test append */
-    for (int i=0; i<100; i++) {
-        da_append(99-i, &my_da);
+/*
+    int main (int argc, char *argv[]) {
+        dynamic_array_t my_da;
+        da_init(&my_da); 
+        for (int i=0; i<100; i++) {
+            da_append(99-i, &my_da);
+        }
+        da_display(&my_da);
+        da_delete_val(5, &my_da);
+        da_display(&my_da);
+        da_delete_index(0, &my_da);
+        da_display(&my_da);
+        return 0;
     }
-    da_display(&my_da);
-    /* test delete */
-    da_delete_val(5, &my_da);
-    da_display(&my_da);
-    da_delete_index(0, &my_da);
-    da_display(&my_da);
-    return 0;
-}
+*/
 
 
 
