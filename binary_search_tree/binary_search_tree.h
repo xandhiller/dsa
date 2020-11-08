@@ -14,10 +14,13 @@
 #include "../heap/heap.h"
 
 /* Structures */
-struct bst {
-    dynamic_array_t* array;
+struct bst_node {
+    DATA_TYPE val;
+    struct bst_node* parent;
+    struct bst_node* left_child;
+    struct bst_node* right_child;
 };
-typedef struct bst bst_t;
+typedef struct bst_node bst_node_t;
 
 
 /******************************************************************************/
@@ -28,21 +31,23 @@ typedef struct bst bst_t;
 /******************************************************************************/
 
 
-/* Intialises the array used to store the binary tree. */
-void bst_init(bst_t* bst);
+/* Intialises the root and sets the root value. */
+void bst_init(bst_node_t* root, DATA_TYPE root_val);
 
 
 /* Used to determine precedence of the elements in the binary tree. */
-uint8_t bst_order_rel(DATA_TYPE a, DATA_TYPE b);
+int8_t bst_order_rel(DATA_TYPE a, DATA_TYPE b);
 
 
-uint64_t bst_get_left(void);
-uint64_t bst_get_right(void);
-
-/* Inserts a DATA_TYPE type value into the binary search tree  */
-bool bst_insert(DATA_TYPE val, bst_t* bst);
+/* Only adds unique values. */
+void bst_insert(DATA_TYPE val, bst_node_t* root);
 
 
+/* Given some possible value stored in the binary search tree, return its address
+ * or return NULL ptr. */
+bst_node_t* bst_find(void);
 
-void bst_find(void);
-void bst_delete(void);
+
+/* Takes in an address of a node to delete, and the root of the bst. Deletes
+ * "to_delete" from the bst. */
+void bst_delete(bst_node_t* to_delete, bst_node_t* root);
