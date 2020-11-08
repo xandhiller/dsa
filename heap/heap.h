@@ -1,6 +1,8 @@
 // Author:  Alex Hiller
 // Year:    2020
 
+#ifndef HEAP_H
+#define HEAP_H
 
 /* Defines & Enumerations */
 #define A_PRECEDES        1 
@@ -93,3 +95,5 @@ DATA_TYPE* hp_pop_by_index(uint64_t index, heap_t* hp);
 
 
 void hp_display(heap_t* hp);
+
+#endif

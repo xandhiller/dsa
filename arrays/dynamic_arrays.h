@@ -1,13 +1,17 @@
 // Author:  Alex Hiller
 // Year:    2020
 
+#ifndef DYNAMIC_ARRAYS_H
+#define DYNAMIC_ARRAYS_H
+
+
 /* Libraries */
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdio.h>
 
 
-#define MAX_CHUNK_SIZE  128
+/* #define MAX_CHUNK_SIZE  128 */
 #define TRUE            1
 #define FALSE           0
 #define DATA_TYPE       int
@@ -21,7 +25,6 @@ struct dynamic_array {
     uint64_t nb_vals;   /* Number of meaningful values stored in the array */
 };
 typedef struct dynamic_array dynamic_array_t;
-
 
 typedef uint8_t bool;
 
@@ -60,3 +63,6 @@ void da_swap(uint64_t loc_a, uint64_t loc_b, dynamic_array_t* da);
 /* Find the indices of a certain value in the array. Returns an array of 
  * indices */
 uint64_t* da_find_by_val(DATA_TYPE val, dynamic_array_t* da);
+
+
+#endif

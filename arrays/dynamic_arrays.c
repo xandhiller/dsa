@@ -8,6 +8,7 @@
 
 #include "dynamic_arrays.h"
 
+
 /* Get and set length */
 int da_get_length(dynamic_array_t* da) {
     return da->length;
@@ -15,6 +16,7 @@ int da_get_length(dynamic_array_t* da) {
 void da_set_length(dynamic_array_t* da, int new_length) {
     da->length = new_length;
 }
+
 
 /* Get and set nb_vals */
 int da_get_nb_vals(dynamic_array_t* da) {
@@ -204,7 +206,7 @@ uint64_t* da_find_by_val(DATA_TYPE val, dynamic_array_t* da) {
             indices[count] = i;
         }
     }
-    indices[0] == count;
+    indices[0] = count;
     return indices;
 }
 
