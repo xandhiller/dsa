@@ -28,14 +28,6 @@ typedef struct dynamic_array dynamic_array_t;
 
 typedef uint8_t bool;
 
-int da_get_length(dynamic_array_t* da);
-
-void da_set_length(dynamic_array_t* da, int new_length);
-
-int da_get_nb_vals(dynamic_array_t* da);
-
-void da_set_nb_vals(dynamic_array_t* da, int new_nb_vals);
-
 /* Initialise the da by making the original array's pointer NULL, so it's not 
  * pointing to nonsense in memory. */
 void da_init(dynamic_array_t* da);
