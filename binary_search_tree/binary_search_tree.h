@@ -5,7 +5,7 @@
 /* Defines & Enumerations */
 /* <++> */
 
-#ifndef DATA_TYPE 
+#ifndef DA_DATA_TYPE 
 #define DA_DATA_TYPE   void*
 #endif
 

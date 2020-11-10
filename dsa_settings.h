@@ -8,7 +8,7 @@
 #define FALSE           0
 #define HEAD            -1
 #define TAIL            -2
-typedef uint8_t bool;
+
 #define A_PRECEDES        1 
 #define LEFT_PRECEDES     1
 #define B_PRECEDES       -1
@@ -20,33 +20,34 @@ typedef uint8_t bool;
 #define SWAP_LEFT         3
 #define DO_NOTHING        4
 
+#include <stdint.h>
+typedef uint8_t bool;
+
 /******************************************************************************/
 /* DATA TYPES for various data structures. */
 /******************************************************************************/
 #ifndef DA_DATA_TYPE 
-#define DA_DATA_TYPE       int
+#define DA_DATA_TYPE    void*
 #endif
 
 #ifndef Q_DATA_TYPE 
-#define Q_DATA_TYPE       DA_DATA_TYPE
+#define Q_DATA_TYPE     DA_DATA_TYPE
 #endif
 
 #ifndef ST_DATA_TYPE 
-#define ST_DATA_TYPE       DA_DATA_TYPE
+#define ST_DATA_TYPE    DA_DATA_TYPE
 #endif
 
 #ifndef HP_DATA_TYPE 
-#define HP_DATA_TYPE      DA_DATA_TYPE
+#define HP_DATA_TYPE    DA_DATA_TYPE
 #endif
 
 #ifndef UF_DATA_TYPE 
-#define UF_DATA_TYPE      DA_DATA_TYPE
+#define UF_DATA_TYPE    DA_DATA_TYPE
 #endif
-
 
 #ifndef BST_DATA_TYPE 
 #define BST_DATA_TYPE   int
 #endif
-
 
 #endif

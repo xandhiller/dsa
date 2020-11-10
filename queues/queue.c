@@ -11,6 +11,7 @@
 
 
 void queue_init(queue_t* q) {
+    q->data = (dynamic_array_t*)malloc(sizeof(dynamic_array_t));
     da_init(q->data);
 }
 
