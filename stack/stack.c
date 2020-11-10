@@ -11,11 +11,11 @@ void stack_init(stack_t* st) {
     da_init(st->data);
 }
 
-void stack_add(stack_t* st, DATA_TYPE val) {
+void stack_add(stack_t* st, ST_DATA_TYPE val) {
     da_append(val, st->data);
 }
 
-DATA_TYPE stack_pop(stack_t* st) {
+ST_DATA_TYPE stack_pop(stack_t* st) {
     return da_pop(TAIL, st->data);
 }
 
