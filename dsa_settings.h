@@ -20,14 +20,13 @@
 #define SWAP_LEFT         3
 #define DO_NOTHING        4
 
-#include <stdint.h>
-typedef uint8_t bool;
+#include <stdbool.h>
 
 /******************************************************************************/
 /* DATA TYPES for various data structures. */
 /******************************************************************************/
 #ifndef DA_DATA_TYPE 
-#define DA_DATA_TYPE    void*
+#define DA_DATA_TYPE    int
 #endif
 
 #ifndef Q_DATA_TYPE 
@@ -47,7 +46,7 @@ typedef uint8_t bool;
 #endif
 
 #ifndef BST_DATA_TYPE 
-#define BST_DATA_TYPE   int
+#define BST_DATA_TYPE   char
 #endif
 
 #endif
