@@ -18,8 +18,6 @@
 #include <math.h>
 #include "../dsa_settings.h"
 #include "../arrays/dynamic_arrays.h"
-#include "../heap/heap.h"
-#include "../stack/stack.h"
 #include "../queues/queue.h"
 
 

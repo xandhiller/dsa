@@ -130,31 +130,31 @@ void da_append(DA_DATA_TYPE val, dynamic_array_t* da) {
 
 /* Pop values from the front (HEAD), end of the list (TAIL), or index of a value */
 DA_DATA_TYPE da_pop(int location, dynamic_array_t* da) { 
-    DA_DATA_TYPE popped=0;
     if (location == HEAD) {
-        popped = da->data[0];
+        DA_DATA_TYPE popped = da->data[0];
         for (int i = 0; i < da->nb_vals; i++) {
             da->data[i] = da->data[i+1];
         }
         da->length = da->length-1;
         da->nb_vals = da->nb_vals-1;
-        da->data = (DA_DATA_TYPE*)realloc(da->data, (da->length)*sizeof(*da->data));
-
+        da->data = (DA_DATA_TYPE*)realloc(da->data, (da->length)*sizeof(DA_DATA_TYPE));
+        return popped;
     }
     else if (location == TAIL) {
-        popped = da->data[da->nb_vals-1];
+        DA_DATA_TYPE popped = da->data[da->nb_vals-1];
         da->length = da->length-1;
         da->nb_vals = da->nb_vals-1;
-        da->data = (DA_DATA_TYPE*)realloc(da->data, (da->length)*sizeof(*da->data));
+        da->data = (DA_DATA_TYPE*)realloc(da->data, (da->length)*sizeof(DA_DATA_TYPE));
+        return popped;
     }
     else if (location >=0 && location < da->nb_vals) {
-        popped = da->data[location];
-
+        DA_DATA_TYPE popped = da->data[location];
+        return popped;
     }
     else {
-        return '\0';
+        /* Safest thing to return from a fn with various possible types. */
+        return NULL;
     }
-    return popped;
 }
 
 

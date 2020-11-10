@@ -22,7 +22,15 @@ void bst_init(bst_node_t* root, BST_DATA_TYPE root_val) {
 
 
 int8_t bst_order_rel(BST_DATA_TYPE a, BST_DATA_TYPE b) {
-    return hp_order_rel(a, b);
+    if (a < b) {
+        return A_PRECEDES;
+    }
+    else if (b < a) {
+        return B_PRECEDES;
+    }
+    else {
+        return A_EQUAL_B;
+    }
 }
 
 
@@ -71,6 +79,8 @@ void bst_insert(BST_DATA_TYPE to_insert, bst_node_t* root) {
 
 
 bst_node_t* bst_find(void) {
+    /* TODO. */
+    return NULL;
 }
 
 
@@ -90,7 +100,7 @@ void bst_display(bst_node_t* root) {
     while (to_print->data->nb_vals != 0) {
         /* Poll the queue, save that val, and print its return value */
         bst_node_t* current = (bst_node_t*)queue_poll(to_print);
-        printf("%d\n", current->val); 
+        printf("%d ", current->val); 
         count++;
         /* Get the children and add to the queue if they're not NULL */
         if (current->left_child != NULL) {
