@@ -20,7 +20,7 @@ ST_DATA_TYPE stack_pop(stack_t* st) {
 }
 
 
-int main (int argc, char *argv[]) {
+/* int main (int argc, char *argv[]) {
     stack_t my_stack;
     stack_init(&my_stack);
     for (int i = 0; i < 50; i++) {
@@ -33,4 +33,4 @@ int main (int argc, char *argv[]) {
 
 
     return 0;
-}
+} */

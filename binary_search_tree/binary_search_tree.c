@@ -83,12 +83,11 @@ bool is_power_of_two(uint64_t x) {
 
 void bst_display(bst_node_t* root) {
     queue_t v_to_print; 
-    queue_t* to_print;
+    queue_t* to_print = &v_to_print;
     queue_init(to_print);
     queue_add(root, to_print);
     uint64_t count = 0;
     while (to_print->data->nb_vals != 0) {
-
         /* Poll the queue, save that val, and print its return value */
         bst_node_t* current = (bst_node_t*)queue_poll(to_print);
         printf("%d\n", current->val); 

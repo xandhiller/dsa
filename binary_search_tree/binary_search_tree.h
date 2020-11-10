@@ -6,19 +6,17 @@
 /* <++> */
 
 #ifndef DATA_TYPE 
-#define DATA_TYPE   void*
+#define DA_DATA_TYPE   void*
 #endif
 
 
-#ifndef BST_DATA_TYPE 
-#define BST_DATA_TYPE   int
-#endif
 
 /* Libraries */
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <math.h>
+#include "../dsa_settings.h"
 #include "../arrays/dynamic_arrays.h"
 #include "../heap/heap.h"
 #include "../stack/stack.h"

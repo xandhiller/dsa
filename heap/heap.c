@@ -285,7 +285,7 @@ void hp_display(heap_t* hp) {
 }
 
 
-int main (int argc, char *argv[]) {
+/* int main (int argc, char *argv[]) {
     heap_t my_hp;
     hp_init(&my_hp);
     for (int i = 120; i > 0; i--) {
@@ -295,4 +295,4 @@ int main (int argc, char *argv[]) {
     hp_pop_by_index(11, &my_hp);
     hp_display(&my_hp);
     return 0;
-}
+} */

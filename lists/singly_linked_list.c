@@ -303,7 +303,7 @@ s_node_t* sl_pop(uint64_t location, s_node_t* head) {
 }
 
 
-int main (int argc, char *argv[]) {
+/* int main (int argc, char *argv[]) {
 
     return 0;
-}
+} */

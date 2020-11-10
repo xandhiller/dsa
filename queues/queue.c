@@ -24,7 +24,7 @@ void queue_add(Q_DATA_TYPE val, queue_t* q) {
     da_append(val, q->data);
 }
 
-int main (int argc, char *argv[]) {
+/* int main (int argc, char *argv[]) {
     queue_t my_q;
     queue_init(&my_q);
     for (int i = 0; i < 40; i++) {
@@ -36,4 +36,4 @@ int main (int argc, char *argv[]) {
     }
 
     return 0;
-}
+} */
