@@ -23,7 +23,7 @@ bool da_expand(dynamic_array_t* da) {
     int count = da->length;
     /* If it has no elements, allocate the first one. */
     if (count == 0) {
-        da->data = (DATA_TYPE*)realloc(da->data, sizeof(DATA_TYPE));
+        da->data = (DA_DATA_TYPE*)realloc(da->data, sizeof(DA_DATA_TYPE));
         if (da->data != NULL) {
             /* Only change the da's parameter if the allocation worked. */  
             da->length = 1;
@@ -35,7 +35,7 @@ bool da_expand(dynamic_array_t* da) {
     }
     /* Double the size of the array. */
     else {
-        da->data = (DATA_TYPE*)realloc(da->data, 2*count*sizeof(DATA_TYPE));
+        da->data = (DA_DATA_TYPE*)realloc(da->data, 2*count*sizeof(DA_DATA_TYPE));
         /* If the memory allocation failed, let the user know */
         if (da->data != NULL) {
             /* Only change the da's parameter if the allocation worked. */
@@ -50,7 +50,7 @@ bool da_expand(dynamic_array_t* da) {
 
 
 /* Delete certain value from array and then resize. */
-bool da_delete_val(DATA_TYPE val, dynamic_array_t* da) {
+bool da_delete_val(DA_DATA_TYPE val, dynamic_array_t* da) {
     int val_index=0, i=0;
     bool found=FALSE;
     /* Perform the search. */
@@ -71,7 +71,7 @@ bool da_delete_val(DATA_TYPE val, dynamic_array_t* da) {
     da->length = da->length-1;
     da->nb_vals = da->nb_vals-1;
     /* Officially allocate the memory that way */
-    da->data = (DATA_TYPE*)realloc(da->data, (da->length)*sizeof(DATA_TYPE));
+    da->data = (DA_DATA_TYPE*)realloc(da->data, (da->length)*sizeof(DA_DATA_TYPE));
     /* If the memory allocation failed, let the user know */
     if (da->data != NULL) {
         return TRUE;
@@ -98,7 +98,7 @@ bool da_delete_index(uint64_t index, dynamic_array_t* da) {
         /* Decrement the count of length after the shift*/ 
         da->length = da->length-1;
         /* Realloc the array to the size of length*/
-        da->data = (DATA_TYPE*)realloc(da->data, da->length*sizeof(DATA_TYPE));
+        da->data = (DA_DATA_TYPE*)realloc(da->data, da->length*sizeof(DA_DATA_TYPE));
         /* If the memory allocation failed, the deletion failed.*/
         if (da->data != NULL) {
             return TRUE;
@@ -119,7 +119,7 @@ void da_display(dynamic_array_t* da) {
 }
 
 
-void da_append(DATA_TYPE val, dynamic_array_t* da) {
+void da_append(DA_DATA_TYPE val, dynamic_array_t* da) {
     if (da->length <= da->nb_vals) {
         while (!da_expand(da));
     }
@@ -129,8 +129,8 @@ void da_append(DATA_TYPE val, dynamic_array_t* da) {
 
 
 /* Pop values from the front (HEAD), end of the list (TAIL), or index of a value */
-DATA_TYPE da_pop(int location, dynamic_array_t* da) { 
-    DATA_TYPE popped=0;
+DA_DATA_TYPE da_pop(int location, dynamic_array_t* da) { 
+    DA_DATA_TYPE popped=0;
     if (location == HEAD) {
         popped = da->data[0];
         for (int i = 0; i < da->nb_vals; i++) {
@@ -138,14 +138,14 @@ DATA_TYPE da_pop(int location, dynamic_array_t* da) {
         }
         da->length = da->length-1;
         da->nb_vals = da->nb_vals-1;
-        da->data = (DATA_TYPE*)realloc(da->data, (da->length)*sizeof(*da->data));
+        da->data = (DA_DATA_TYPE*)realloc(da->data, (da->length)*sizeof(*da->data));
 
     }
     else if (location == TAIL) {
         popped = da->data[da->nb_vals-1];
         da->length = da->length-1;
         da->nb_vals = da->nb_vals-1;
-        da->data = (DATA_TYPE*)realloc(da->data, (da->length)*sizeof(*da->data));
+        da->data = (DA_DATA_TYPE*)realloc(da->data, (da->length)*sizeof(*da->data));
     }
     else if (location >=0 && location < da->nb_vals) {
         popped = da->data[location];
@@ -159,13 +159,13 @@ DATA_TYPE da_pop(int location, dynamic_array_t* da) {
 
 
 void da_swap(uint64_t loc_a, uint64_t loc_b, dynamic_array_t* da) {
-    DATA_TYPE temp = da->data[loc_a];
+    DA_DATA_TYPE temp = da->data[loc_a];
     da->data[loc_a] = da->data[loc_b];
     da->data[loc_b] = temp;
 }
 
 
-uint64_t* da_find_by_val(DATA_TYPE val, dynamic_array_t* da) {
+uint64_t* da_find_by_val(DA_DATA_TYPE val, dynamic_array_t* da) {
     uint64_t len = da->nb_vals;
     uint64_t count = 0;
     uint64_t* indices = (uint64_t*)malloc(sizeof(uint64_t));
