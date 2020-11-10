@@ -5,17 +5,29 @@
 /* Defines & Enumerations */
 /* <++> */
 
+#ifndef DATA_TYPE 
+#define DATA_TYPE   void*
+#endif
+
+
+#ifndef BST_DATA_TYPE 
+#define BST_DATA_TYPE   int
+#endif
 
 /* Libraries */
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <math.h>
 #include "../arrays/dynamic_arrays.h"
 #include "../heap/heap.h"
+#include "../stack/stack.h"
+#include "../queues/queue.h"
+
 
 /* Structures */
 struct bst_node {
-    DATA_TYPE val;
+    BST_DATA_TYPE val;
     struct bst_node* parent;
     struct bst_node* left_child;
     struct bst_node* right_child;
@@ -32,15 +44,15 @@ typedef struct bst_node bst_node_t;
 
 
 /* Intialises the root and sets the root value. */
-void bst_init(bst_node_t* root, DATA_TYPE root_val);
+void bst_init(bst_node_t* root, BST_DATA_TYPE root_val);
 
 
 /* Used to determine precedence of the elements in the binary tree. */
-int8_t bst_order_rel(DATA_TYPE a, DATA_TYPE b);
+int8_t bst_order_rel(BST_DATA_TYPE a, BST_DATA_TYPE b);
 
 
 /* Only adds unique values. */
-void bst_insert(DATA_TYPE val, bst_node_t* root);
+void bst_insert(BST_DATA_TYPE val, bst_node_t* root);
 
 
 /* Given some possible value stored in the binary search tree, return its address
@@ -51,3 +63,7 @@ bst_node_t* bst_find(void);
 /* Takes in an address of a node to delete, and the root of the bst. Deletes
  * "to_delete" from the bst. */
 void bst_delete(bst_node_t* to_delete, bst_node_t* root);
+
+
+/* Display binary tree for debugging purposes */
+void bst_display(bst_node_t* root);
