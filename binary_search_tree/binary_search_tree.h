@@ -53,7 +53,7 @@ void bst_insert(BST_DATA_TYPE val, bst_node_t* root);
 
 /* Given some possible value stored in the binary search tree, return its address
  * or return NULL ptr. */
-bst_node_t* bst_find(void);
+bst_node_t* bst_find(BST_DATA_TYPE val, bst_node_t* root);
 
 
 /* Takes in an address of a node to delete, and the root of the bst. Deletes

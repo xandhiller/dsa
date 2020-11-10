@@ -78,8 +78,26 @@ void bst_insert(BST_DATA_TYPE to_insert, bst_node_t* root) {
 }
 
 
-bst_node_t* bst_find(void) {
-    /* TODO. */
+bst_node_t* bst_find(BST_DATA_TYPE to_find, bst_node_t* root) {
+    bst_node_t* trav = root;
+    while (trav->val != to_find) {
+        /* If the node is NULL then you're at the end of the bst and you 
+         * haven't found the value requested. */
+        if (trav == NULL) {
+            return NULL;
+        }
+        switch (bst_order_rel(to_find, trav->val))  {
+            case(A_PRECEDES):
+                trav = trav->left_child;
+                break;
+            case(B_PRECEDES):
+                trav = trav->right_child;
+                break;
+            case(A_EQUAL_B):
+                return trav;
+                break;
+        } 
+    /* Fail-safe: Value not found. */
     return NULL;
 }
 
@@ -87,19 +105,23 @@ bst_node_t* bst_find(void) {
 void bst_delete(bst_node_t* to_delete, bst_node_t* root) {
 }
 
+
 bool is_power_of_two(uint64_t x) {
     return ((x != 0) && ((x & (~x + 1)) == x));
 }
+
 
 void bst_display(bst_node_t* root) {
     queue_t* to_print = (queue_t*)malloc(sizeof(queue_t));
     queue_init(to_print);
     queue_add(root, to_print);
     uint64_t count = 0;
+    /* Note that the sum of m-terms of powers of two is  2^(m+1)-1. */
+    uint64_t row_count = 0;
     while (to_print->data->nb_vals != 0) {
         /* Poll the queue, save that val, and print its return value */
         bst_node_t* current = (bst_node_t*)queue_poll(to_print);
-        printf("%d\n", current->val); 
+        printf("%c ", current->val); 
         count++;
         /* Get the children and add to the queue if they're not NULL */
         if (current->left_child != NULL) {
@@ -108,11 +130,13 @@ void bst_display(bst_node_t* root) {
         if (current->right_child != NULL) {
             queue_add(current->right_child, to_print);
         }
-        /* If count is a power of two, print a newline. */
-        if (is_power_of_two(count)) {
+        /* If count is a sum of a power of two, print a newline. */
+        if (count == (1 << (row_count+1))-1) {
+            row_count++;
             printf("\n"); 
         }
     }
+    printf("\n"); 
 }
 
 
@@ -120,11 +144,18 @@ void bst_display(bst_node_t* root) {
 int main (int argc, char *argv[]) {
     bst_node_t* root = (bst_node_t*)malloc(sizeof(bst_node_t));
     bst_init(root, 10);
-    bst_insert(20, root);
-    bst_insert(5, root);
-    bst_insert(11, root);
-    bst_insert(6, root);
-    bst_insert(4, root);
+    bst_insert('a' , root);
+    bst_insert('b' , root);
+    bst_insert('c' , root);
+    bst_insert('d' , root);
+    bst_insert('e' , root);
+    bst_insert('f' , root);
+    bst_insert('g' , root);
+    bst_insert('h' , root);
+    bst_insert('i' , root);
+    bst_insert('j' , root);
+    bst_insert('k' , root);
+    bst_insert('l' , root);
     bst_display(root);
     return 0;
 }
