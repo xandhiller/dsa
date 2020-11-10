@@ -1,6 +1,9 @@
 // Author:  Alex Hiller
 // Year:    2020
 
+#ifndef STACK_H
+#define STACK_H
+
 /* Libraries */
 #include <stdlib.h>
 #include <stdint.h>
@@ -19,3 +22,5 @@ typedef struct stack stack_t;
 void stack_init(stack_t* st);
 void stack_add(stack_t* st, DATA_TYPE val);
 DATA_TYPE stack_pop(stack_t* st);
+
+#endif
