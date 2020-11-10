@@ -16,11 +16,11 @@ void queue_init(queue_t* q) {
 
 /* Probably should change the return value to pointer in case the 
  * queue is empty. */
-DATA_TYPE queue_poll(queue_t* q) {
+Q_DATA_TYPE queue_poll(queue_t* q) {
     return da_pop(HEAD, q->data);
 }
 
-void queue_add(DATA_TYPE val, queue_t* q) {
+void queue_add(Q_DATA_TYPE val, queue_t* q) {
     da_append(val, q->data);
 }
 
