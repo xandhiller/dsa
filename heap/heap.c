@@ -20,7 +20,7 @@ bool hp_expand(heap_t* hp) {
 }
 
 
-int8_t hp_order_rel(DATA_TYPE a, DATA_TYPE b) {
+int8_t hp_order_rel(HP_DATA_TYPE a, HP_DATA_TYPE b) {
     if (a < b) {
         return A_PRECEDES;
     }
@@ -38,7 +38,7 @@ uint64_t hp_next_empty(heap_t* hp) {
 }
 
 
-DATA_TYPE hp_peek(uint64_t location, heap_t* hp) {
+HP_DATA_TYPE hp_peek(uint64_t location, heap_t* hp) {
     return hp->array->data[location];
 }
 
@@ -100,7 +100,7 @@ void hp_bubble_up(uint64_t location, heap_t* hp) {
 }
 
 
-uint8_t hp_bubble_down_action(DATA_TYPE left_child, DATA_TYPE right_child, DATA_TYPE current) {
+uint8_t hp_bubble_down_action(HP_DATA_TYPE left_child, HP_DATA_TYPE right_child, HP_DATA_TYPE current) {
     uint8_t l_to_c = hp_order_rel(left_child,  current);
     uint8_t r_to_c = hp_order_rel(right_child, current);
     uint8_t l_to_r = hp_order_rel(left_child,  right_child);
@@ -156,8 +156,8 @@ void hp_bubble_down(uint64_t location, heap_t* hp) {
         uint64_t left_child  = child_inds[1];
         free(child_inds);
         /* Storage defaults to creating left node first, so check left. */
-        DATA_TYPE l_child_value  = hp->array->data[left_child];
-        DATA_TYPE current_value = hp->array->data[location];
+        HP_DATA_TYPE l_child_value  = hp->array->data[left_child];
+        HP_DATA_TYPE current_value = hp->array->data[location];
         if (hp_order_rel(l_child_value, current_value) == A_PRECEDES) {
             /* Swap left */
             da_swap(location, left_child, hp->array);
@@ -172,9 +172,9 @@ void hp_bubble_down(uint64_t location, heap_t* hp) {
         uint64_t left_child  = child_inds[1];
         uint64_t right_child = child_inds[2];
         free(child_inds);
-        DATA_TYPE l_child_value  = hp->array->data[left_child];
-        DATA_TYPE r_child_value = hp->array->data[right_child];
-        DATA_TYPE current_value = hp->array->data[location];
+        HP_DATA_TYPE l_child_value  = hp->array->data[left_child];
+        HP_DATA_TYPE r_child_value = hp->array->data[right_child];
+        HP_DATA_TYPE current_value = hp->array->data[location];
         switch(hp_bubble_down_action(l_child_value, r_child_value, current_value)) {
             case(SWAP_LEFT):
                 da_swap(location, left_child, hp->array);
@@ -194,13 +194,13 @@ void hp_bubble_down(uint64_t location, heap_t* hp) {
 }
 
 
-void hp_add(DATA_TYPE val, heap_t* hp) {
+void hp_add(HP_DATA_TYPE val, heap_t* hp) {
     da_append(val, hp->array);
     hp_bubble_up(hp->array->nb_vals-1, hp);
 }
 
 
-DATA_TYPE* hp_pop_by_val(DATA_TYPE val, heap_t* hp) {
+HP_DATA_TYPE* hp_pop_by_val(HP_DATA_TYPE val, heap_t* hp) {
     /* Find val's index with end */
     uint64_t* indices = da_find_by_val(val, hp->array);
     uint64_t nb_copies = indices[0];
@@ -214,7 +214,7 @@ DATA_TYPE* hp_pop_by_val(DATA_TYPE val, heap_t* hp) {
         /* Swap val with the last value */
         da_swap(chosen, hp->array->nb_vals-1, hp->array);
         /* Pop end  */
-        DATA_TYPE* popped = (DATA_TYPE*)malloc(sizeof(DATA_TYPE));
+        HP_DATA_TYPE* popped = (HP_DATA_TYPE*)malloc(sizeof(HP_DATA_TYPE));
         *popped = da_pop(TAIL, hp->array);
         /* Bubble down the swapped value */
         hp_bubble_down(chosen, hp);
@@ -223,7 +223,7 @@ DATA_TYPE* hp_pop_by_val(DATA_TYPE val, heap_t* hp) {
     }
     else if (chosen == last_index) {
         /* Pop end  */
-        DATA_TYPE* popped = (DATA_TYPE*)malloc(sizeof(DATA_TYPE));
+        HP_DATA_TYPE* popped = (HP_DATA_TYPE*)malloc(sizeof(HP_DATA_TYPE));
         *popped = da_pop(TAIL, hp->array);
         /* Return the popped value */
         return popped;
@@ -235,7 +235,7 @@ DATA_TYPE* hp_pop_by_val(DATA_TYPE val, heap_t* hp) {
 }
 
 
-DATA_TYPE* hp_pop_by_index(uint64_t index, heap_t* hp) {
+HP_DATA_TYPE* hp_pop_by_index(uint64_t index, heap_t* hp) {
     uint64_t last_index = hp->array->nb_vals-1;
     /* If index is out of the bounds of the number of values, return NULL. */
     if (index > last_index) {
@@ -247,7 +247,7 @@ DATA_TYPE* hp_pop_by_index(uint64_t index, heap_t* hp) {
         if (index != last_index) {
             da_swap(index, last_index, hp->array);
         }
-        DATA_TYPE* popped = (DATA_TYPE*)malloc(sizeof(DATA_TYPE));
+        HP_DATA_TYPE* popped = (HP_DATA_TYPE*)malloc(sizeof(HP_DATA_TYPE));
         *popped = da_pop(TAIL, hp->array);
         return popped;
     }

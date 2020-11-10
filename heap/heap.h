@@ -4,17 +4,6 @@
 #ifndef HEAP_H
 #define HEAP_H
 
-/* Defines & Enumerations */
-#define A_PRECEDES        1 
-#define LEFT_PRECEDES     1
-#define B_PRECEDES       -1
-#define RIGHT_PRECEDES   -1
-#define A_EQUAL_B         0
-
-#define CHOOSE_SMALLEST   1
-#define SWAP_RIGHT        2
-#define SWAP_LEFT         3
-#define DO_NOTHING        4
 
 /* Libraries */
 #include <stdlib.h>
@@ -41,7 +30,7 @@ bool hp_expand(heap_t* hp);
 
 /* The order relation used to determine the ordering of the heap. Currently uses
  * the '>' and '<' of the order relation. */
-int8_t hp_order_rel(DATA_TYPE a, DATA_TYPE b);
+int8_t hp_order_rel(HP_DATA_TYPE a, HP_DATA_TYPE b);
 
 
 /* Get the first index of the heap that is empty.  */
@@ -49,7 +38,7 @@ uint64_t hp_next_empty(heap_t* hp);
 
 
 /* Returns the value at "location", without altering the heap.  */
-DATA_TYPE hp_peek(uint64_t location, heap_t* hp);
+HP_DATA_TYPE hp_peek(uint64_t location, heap_t* hp);
 
 
 /******************************************************************************/
@@ -80,7 +69,7 @@ void hp_bubble_down(uint64_t location, heap_t* hp);
 
 
 /* Add an element to the heap. */
-void hp_add(DATA_TYPE val, heap_t* hp);
+void hp_add(HP_DATA_TYPE val, heap_t* hp);
 
 
 /******************************************************************************/
@@ -88,10 +77,10 @@ void hp_add(DATA_TYPE val, heap_t* hp);
  * Because of this, we need to return a pointer and if it is NULL, then it 
  * wasn't found in the heap. */
 /******************************************************************************/
-DATA_TYPE* hp_pop_by_val(DATA_TYPE val, heap_t* hp);
+HP_DATA_TYPE* hp_pop_by_val(HP_DATA_TYPE val, heap_t* hp);
 
 
-DATA_TYPE* hp_pop_by_index(uint64_t index, heap_t* hp);
+HP_DATA_TYPE* hp_pop_by_index(uint64_t index, heap_t* hp);
 
 
 void hp_display(heap_t* hp);
