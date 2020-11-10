@@ -2,7 +2,8 @@
 // Year:    2020
 
 
-/* Defines & Enumerations */
+#ifndef UNION_FIND_H
+#define UNION_FIND_H
 
 
 
@@ -10,6 +11,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdio.h>
+#include "../dsa_settings.h"
 #include "../arrays/dynamic_arrays.h"
 
 
@@ -58,3 +60,7 @@ bool uf_find(uint64_t a, uint64_t b, union_find_t* uf);
 /* Makes the elements a and b have the same root node, which can be interpretted 
  * as unifying the elements into the same set. */
 void uf_union(uint64_t a, uint64_t b, union_find_t* uf);
+
+
+
+#endif
