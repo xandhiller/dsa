@@ -46,14 +46,12 @@ int8_t bst_order_rel(BST_DATA_TYPE a, BST_DATA_TYPE b);
 
 
 /* Only adds unique values. */
-void bst_insert(BST_DATA_TYPE val, bst_node_t* root);
+bst_node_t* bst_insert(BST_DATA_TYPE val, bst_node_t* root);
 
 
 /* Given some possible value stored in the binary search tree, return its address
  * or return NULL ptr. */
 bst_node_t* bst_find(BST_DATA_TYPE val, bst_node_t* root);
-
-
 
 
 /* Display binary tree for debugging purposes */
@@ -68,13 +66,17 @@ bst_node_t* bst_biggest_val(bst_node_t* root);
 bst_node_t* bst_smallest_val(bst_node_t* root);
 
 
+/* Return whether the given node is the left or right child of the parent. */
+uint8_t bst_which_child(bst_node_t* current);
+
 /* Describes which of the 4 cases of deletion the node to_delete is 
  * categorised under. */
 uint8_t bst_deletion_case(bst_node_t* to_delete);
 
+
 /* Takes in an address of a node to delete, and the root of the bst. Deletes
  * "to_delete" from the bst. */
-void bst_delete(bst_node_t* to_delete, bst_node_t* root);
+void bst_delete(BST_DATA_TYPE to_delete, bst_node_t* root);
 
 
 

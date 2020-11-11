@@ -34,6 +34,11 @@
 #define RIGHT_SUB_TREE 3
 #define L_AND_R_SUB_TREE 4
 
+/* For helper function used in bs-tree node deletion. */
+#define IS_LEFT_CHILD 1
+#define IS_RIGHT_CHILD 2
+#define IS_ROOT 3
+
 
 #include <stdbool.h>
 
@@ -61,7 +66,7 @@
 #endif
 
 #ifndef BST_DATA_TYPE 
-#define BST_DATA_TYPE   char
+#define BST_DATA_TYPE   int
 #endif
 
 #endif

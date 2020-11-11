@@ -173,22 +173,62 @@ uint8_t bst_deletion_case(bst_node_t* to_delete) {
 }
 
 
-void bst_delete(bst_node_t* to_delete, bst_node_t* root) {
-    switch (bst_deletion_case(to_delete)) {
-        case (LEAF_NODE):
-
-            break;
-        case (LEFT_SUB_TREE):
-            
-            break;
-        case (RIGHT_SUB_TREE):
-            
-            break;
-        case (L_AND_R_SUB_TREE):
-            
-            break;
-        
+uint8_t bst_which_child(bst_node_t* current) {
+    /* Invalid input. */
+    if (current == NULL) {
+        return FALSE;
     }
+    /* If it is its own parent, its root. */
+    else if (current->parent == current) {
+        return IS_ROOT;
+    }
+    else if (current->parent->right_child == current) {
+        return IS_RIGHT_CHILD;
+    }
+    else if (current->parent->left_child == current) {
+        return IS_LEFT_CHILD;
+    }
+    /* Fail-safe. */
+    return FALSE;
+}
+
+
+/* Source: https://www.codesdope.com/blog/article/binary-search-tree-in-c/ */
+bst_node_t* bst_delete(BST_DATA_TYPE to_delete, bst_node_t* root) {
+    /* searching for the item to be deleted */
+    if (root==NULL) {
+        return NULL;
+    }
+    if (to_delete > root->val) {
+        root->right_child = bst_delete(to_delete, root->right_child);
+    }
+    else if (to_delete < root->val) {
+        root->left_child = bst_delete(to_delete, root->left_child);
+    }
+    else {
+        /* No children */
+        if (root->left_child==NULL && root->right_child==NULL) {
+            free(root);
+            return NULL;
+        }
+        /* One child */
+        else if (root->left_child==NULL || root->right_child==NULL) {
+            bst_node_t* temp;
+            if (root->left_child==NULL)
+                temp = root->right_child;
+            else
+                temp = root->left_child;
+            free(root);
+            return temp;
+        }
+        /* Two children */
+        else {
+            bst_node_t* temp = bst_smallest_val(root->right_child);
+            root->val = temp->val;
+            root->right_child = bst_delete(temp->val, root->right_child);
+        }
+    }
+    return root;
 }
 
 
@@ -200,18 +240,18 @@ void bst_delete(bst_node_t* to_delete, bst_node_t* root) {
 int main (int argc, char *argv[]) {
     bst_node_t* root = (bst_node_t*)malloc(sizeof(bst_node_t));
     bst_init(root, 10);
-    bst_insert('a' , root);
-    bst_insert('b' , root);
-    bst_insert('c' , root);
-    bst_insert('d' , root);
-    bst_insert('e' , root);
-    bst_insert('f' , root);
-    bst_insert('g' , root);
-    bst_insert('h' , root);
-    bst_insert('i' , root);
-    bst_insert('j' , root);
-    bst_insert('k' , root);
-    bst_insert('l' , root);
+    bst_insert(20 , root);
+    bst_insert(5 , root);
+    bst_insert(1 , root);
+    bst_insert(15 , root);
+    bst_insert(9 , root);
+    bst_insert(7 , root);
+    bst_insert(12 , root);
+    bst_insert(30 , root);
+    bst_insert(25 , root);
+    bst_insert(40 , root);
+    bst_insert(45 , root);
+    bst_insert(42 , root);
     bst_display(root);
     return 0;
 }
