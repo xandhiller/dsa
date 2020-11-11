@@ -4,21 +4,36 @@
 #ifndef DSA_SETTINGS_H
 #define DSA_SETTINGS_H
 
+/* Simple booleans. */
 #define TRUE            1
 #define FALSE           0
+
+/* For easily detailing whether something should be popped from the head or 
+ * tail of a data structure. */
 #define HEAD            -1
 #define TAIL            -2
 
+/* Order relation results. */
 #define A_PRECEDES        1 
 #define LEFT_PRECEDES     1
 #define B_PRECEDES       -1
 #define RIGHT_PRECEDES   -1
 #define A_EQUAL_B         0
 
+/* Heap node removal choices. */
 #define CHOOSE_SMALLEST   1
 #define SWAP_RIGHT        2
 #define SWAP_LEFT         3
 #define DO_NOTHING        4
+
+
+/* For determining which type of deletion should be undertaken for a binary 
+ * search tree removal. */
+#define LEAF_NODE 1
+#define LEFT_SUB_TREE 2
+#define RIGHT_SUB_TREE 3
+#define L_AND_R_SUB_TREE 4
+
 
 #include <stdbool.h>
 
