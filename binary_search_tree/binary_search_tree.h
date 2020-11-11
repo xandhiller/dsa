@@ -3,12 +3,10 @@
 
 
 /* Defines & Enumerations */
-/* <++> */
-
+/* Switch the dynamic array to be an array of pointers. */
 #ifndef DA_DATA_TYPE 
 #define DA_DATA_TYPE   void*
 #endif
-
 
 
 /* Libraries */
@@ -56,10 +54,27 @@ void bst_insert(BST_DATA_TYPE val, bst_node_t* root);
 bst_node_t* bst_find(BST_DATA_TYPE val, bst_node_t* root);
 
 
+
+
+/* Display binary tree for debugging purposes */
+void bst_display(bst_node_t* root);
+
+
+/* Returns the biggest value in a given bs-tree or bs-sub-tree. */
+bst_node_t* bst_biggest_val(bst_node_t* root);
+
+
+/* Returns the smallest value in a given bs-tree or bs-sub-tree. */
+bst_node_t* bst_smallest_val(bst_node_t* root);
+
+
+/* Describes which of the 4 cases of deletion the node to_delete is 
+ * categorised under. */
+uint8_t bst_deletion_case(bst_node_t* to_delete);
+
 /* Takes in an address of a node to delete, and the root of the bst. Deletes
  * "to_delete" from the bst. */
 void bst_delete(bst_node_t* to_delete, bst_node_t* root);
 
 
-/* Display binary tree for debugging purposes */
-void bst_display(bst_node_t* root);
+

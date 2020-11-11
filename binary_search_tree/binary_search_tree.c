@@ -10,7 +10,6 @@
 #include "binary_search_tree.h"
 
 
-
 void bst_init(bst_node_t* root, BST_DATA_TYPE root_val) {
     root->val = root_val;
     /* Root node is its own parent. */
@@ -102,8 +101,6 @@ bst_node_t* bst_find(BST_DATA_TYPE to_find, bst_node_t* root) {
 }
 
 
-void bst_delete(bst_node_t* to_delete, bst_node_t* root) {
-}
 
 
 bool is_power_of_two(uint64_t x) {
@@ -138,6 +135,65 @@ void bst_display(bst_node_t* root) {
     }
     printf("\n"); 
 }
+
+
+bst_node_t* bst_biggest_val(bst_node_t* root) {
+    bst_node_t* trav = root;
+    while (trav->right_child != NULL) {
+        trav = trav->right_child;
+    }
+    return trav;
+}
+
+
+bst_node_t* bst_smallest_val(bst_node_t* root) {
+    bst_node_t* trav = root;
+    while (trav->left_child != NULL) {
+        trav = trav->left_child;
+    }
+    return trav;
+}
+
+
+uint8_t bst_deletion_case(bst_node_t* to_delete) {
+    if (to_delete->left_child == NULL && to_delete->right_child == NULL) {
+        return LEAF_NODE;
+    }
+    if (to_delete->left_child != NULL && to_delete->right_child == NULL) {
+        return LEFT_SUB_TREE;
+    }
+    if (to_delete->left_child == NULL && to_delete->right_child != NULL) {
+        return RIGHT_SUB_TREE;
+    }
+    if (to_delete->left_child != NULL && to_delete->right_child != NULL) {
+        return L_AND_R_SUB_TREE;
+    }
+    /* Failsafe. */
+    return FALSE;
+}
+
+
+void bst_delete(bst_node_t* to_delete, bst_node_t* root) {
+    switch (bst_deletion_case(to_delete)) {
+        case (LEAF_NODE):
+
+            break;
+        case (LEFT_SUB_TREE):
+            
+            break;
+        case (RIGHT_SUB_TREE):
+            
+            break;
+        case (L_AND_R_SUB_TREE):
+            
+            break;
+        
+    }
+}
+
+
+
+
 
 
 
