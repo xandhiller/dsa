@@ -6,25 +6,7 @@
  */
 
 
-/* Libraries */
-#include <stdlib.h>
-#include <stdint.h>
-
-
-#define DATA_TYPE   int
-#define TRUE        1
-#define FALSE       0
-#define FAIL        -1
-
-
-struct s_node {
-    DATA_TYPE* data;
-    struct s_node* next;
-};
-typedef struct s_node s_node_t;
-
-
-typedef uint8_t bool;
+#include "singly_linked_list.h"
 
 
 /*
@@ -192,10 +174,6 @@ void sl_insert_after(s_node_t* to_insert, s_node_t* after_me) {
         to_insert->next = after_me->next;
         /*Set after_me*/
         after_me->next = to_insert;
-        return TRUE;
-    }
-    else {
-        return FALSE;
     }
 }
 
